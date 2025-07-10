@@ -6,6 +6,8 @@ This is a small, self-contained data engineering project for practice and learni
 
 The dataset is processed in batches, transformed for cleanliness and consistency, and stored in a queryable format for analysis using AWS Athena or other tools.
 
+https://trello.com/b/3lIfOuWe/project1 
+
 ---
 
 ## Tech Stack
@@ -23,13 +25,11 @@ The dataset is processed in batches, transformed for cleanliness and consistency
 
 ## Dataset
 
-> *TBC*
-
-- **Name**: XXX
-- **Source**: [Link to source if public]
-- **Size**: ~XX MB
+- **Name**: AI Powered Job Market Insights
+- **Source**: (https://www.kaggle.com/datasets/uom190346a/ai-powered-job-market-insights)
+- **Size**: 47.41kb
 - **Format**: CSV
-- **Description**: XXX
+- **Description**: The "AI-Powered Job Market Insights" dataset provides a synthetic but realistic snapshot of the modern job market, particularly focusing on the role of artificial intelligence (AI) and automation across various industries. This dataset includes 500 unique job listings, each characterized by different factors like industry, company size, AI adoption level, automation risk, required skills, and job growth projections. It is designed to be a valuable resource for researchers, data scientists, and policymakers exploring the impact of AI on employment, job market trends, and the future of work.
 
 ---
 
