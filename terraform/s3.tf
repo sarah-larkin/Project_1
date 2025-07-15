@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "ingestion_bucket" {
 
 #processed bucket for cleaned data
 resource "aws_s3_bucket" "processed_bucket" {
-  bucket = var.S3_processed_prefix
+  bucket_prefix = var.S3_processed_prefix
 
   tags = {
     Name        = "processed bucket"

@@ -1,25 +1,25 @@
-#TODO: this is not completed yet (just copied from the docs)
+#Lambda IAM role
 
-resource "aws_iam_role" "test_role" {
-  name = "test_role"
+#Define Lambda trust relationship
+data "aws_iam_policy_document" "assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect = "Allow" 
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
 
-  tags = {
-    tag-key = "tag-value"
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
   }
 }
+
+#create role
+resource "aws_iam_role" "lambda" {
+  name               = "lambda_role" #TODO: check for name prefix instead 
+  path               = "/" #TODO: check this required 
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+}
+
+
+#This won't have any effect yet 
