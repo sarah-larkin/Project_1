@@ -1,5 +1,5 @@
 variable "S3_ingestion_prefix" {
-    type = string 
+    type = string                                  #string is the default
     default = "project-1-ingestion-bucket-"
 }
 
