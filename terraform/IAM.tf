@@ -38,6 +38,8 @@ data "aws_iam_policy_document" "lambda_s3_access" {
       "s3:ListBucket",
     ]
     resources = [
+      aws_s3_bucket.files.arn,          
+      "${aws_s3_bucket.files.arn}/*",         
       aws_s3_bucket.ingestion_bucket.arn,          #access to the bucket (needed to list objects)
       "${aws_s3_bucket.ingestion_bucket.arn}/*",   #access to objects inside the bucket (needed to get/put ie. read/write objects in the bucket)
       aws_s3_bucket.processed_bucket.arn,         
@@ -50,7 +52,7 @@ data "aws_iam_policy_document" "lambda_s3_access" {
 #(aws_iam_policy)
 resource "aws_iam_policy" "s3_policy" {
   name_prefix   = "lambda_s3_policy"
-  policy        = data.aws_iam_policy_document.lambda_s3_access
+  policy        = data.aws_iam_policy_document.lambda_s3_access.json
 }
 
 
