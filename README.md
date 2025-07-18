@@ -25,18 +25,21 @@ https://trello.com/b/3lIfOuWe/project1
 
 ## Dataset
 
-- **Name**: AI Powered Job Market Insights
-- **Source**: (https://www.kaggle.com/datasets/uom190346a/ai-powered-job-market-insights)
-- **Size**: 47.41kb
+- **Name**: LEGO Database
+- **Source**: (https://www.kaggle.com/datasets/rtatman/lego-database)
+- **Size**: 12.99MB
 - **Format**: CSV
-- **Description**: The "AI-Powered Job Market Insights" dataset provides a synthetic but realistic snapshot of the modern job market, particularly focusing on the role of artificial intelligence (AI) and automation across various industries. This dataset includes 500 unique job listings, each characterized by different factors like industry, company size, AI adoption level, automation risk, required skills, and job growth projections. It is designed to be a valuable resource for researchers, data scientists, and policymakers exploring the impact of AI on employment, job market trends, and the future of work.
+- **Description**: This dataset contains the LEGO Parts/Sets/Colors and Inventories of every official LEGO set in the Rebrickable database. These files are current as of July 2017.
 
 ---
 
 ## The ETL Pipeline Overview
 
 1. **Extract**
-   - csv file to Amazon S3
+   - Database is replicated via csv exports saved to a s3 (file-storage-bucket/Project-1)
+   - Files are read and loaded into pandas DataFrames
+   - Includes error handling.
+   - Data saved to extract s3 bucket
 
 2. **Transform**
    - Clean data (e.g., handle nulls, fix date formats, normalize values)

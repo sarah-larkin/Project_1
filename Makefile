@@ -44,3 +44,6 @@ security-check:
 
 set-up: create-environment set-pythonpath activate-venv
 installation: install-requirements install-dev-tools unit-test
+
+
+#TODO: finalise makefile and complete Github actions CI/CD .yml 
