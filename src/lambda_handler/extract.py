@@ -1,8 +1,9 @@
+import pandas as pd 
+import boto3 
 
 
 def extract_lambda_hander(event, context): 
-
-    return 1 
+    pass
 
 #extract data from s3 bucket 
 #covert to pandas df 
