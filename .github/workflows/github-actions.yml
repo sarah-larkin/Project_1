@@ -1,0 +1,6 @@
+name: Project-1 CI/CD pipeline
+
+on: 
+  push:
+    branches:
+      - main
