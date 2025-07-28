@@ -39,3 +39,22 @@ class TestBaseDataBucket():
 # class TestLambdaHandler(): 
 #     def test_lambda_handler(): 
 #         assert extract_lambda_hander() == 1
+
+
+
+#is the bucket availble 
+#is the destination available - extract s3 
+#test for missing or incorrect env variables 
+
+#can it access s3 with correct IAM permission? 
+#what if the file does not exist? 
+#is the key(filename) correct? 
+#test for existing and non-existing keys 
+
+#valid csv?
+#empty file? 
+#file with unexpected columns 
+
+#does pd.read_csv(obj['Body']) work? 
+#if returns a non-dataframe or errors? 
+
