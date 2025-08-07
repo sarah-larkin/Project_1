@@ -16,3 +16,13 @@ variable "environment" {
     type = string
     default = "Dev"
 }
+
+variable "python_runtime" {
+  type    = string
+  default = "python3.12"
+}
+
+variable "lambda_extract" {
+  type    = string
+  default = "extract-lambda"
+}
