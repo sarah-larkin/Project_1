@@ -3,25 +3,43 @@ import boto3
 import logging 
 import os 
 
+logger = logging.getLogger() 
 
-def extract_lambda_hander(event, context): 
-    s3 = boto3.client('s3')  #initialise s3 client 
+
+#S3_INGESTION_BUCKET = os.getenv("S3_INGESTION_BUCKET")
+
+
+# def extract_lambda_hander(event, context): 
+#     s3 = boto3.client('s3')  #initialise s3 client 
     
-    bucket_name = "project-files-20250717160548064700000001" #TODO: make this dynamic 
-    file_keys = 
+#     bucket_name = "project-files-20250717160548064700000001" #TODO: make this dynamic 
+#     file_keys = 
 
-#extract data from s3 bucket 
-#covert to pandas df 
-#Error handling - missing files, bad format, s3 read/write failures (cloudwatch)
-#env variables - bucket names
-#upload to extract s3
-#return a success message print(f"Successfully downloaded {key} from {bucket}") - cloudwatch 
+"""
+set up env variables - bucket names
+get list of files from source s3 bucket 
+check for any new files 
+extract files from s3 bucket - download to /tmp? 
+update file name with timestamp once processed
+covert to pandas df (small files)
+Error handling - missing files, bad format, s3 read/write failures (cloudwatch/logger)
+upload to (extract) s3
+return a success message print(f"Successfully downloaded {key} from {bucket}") - cloudwatch 
 
-#timestamp?? 
+"""
+
+def list_files(): 
+    s3 = boto3.client('s3')
+    FILES_BUCKET = os.getenv("FILES_BUCKET")
+    files = []
+    response = s3.list_objects_v2(Bucket=FILES_BUCKET)
+    for item in response.get("Contents", []):     #TODO: look at the .get() and the expected output
+        files.append(item["Key"])
+    return files
+ 
 
 
-
-# def get_bucket_name(): 
-#     bucket_name = os.environ.get("s3_extract_buckt")
-#     return{f"ingestion_Bucket:{bucket_name}"}
-#TODO: check how .env or best practice for this to be dynamic 
+"""
+extract inventory_parts.csv first (largest file)
+log and stor row count
+"""

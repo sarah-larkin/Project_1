@@ -1,8 +1,8 @@
-from src.lambda_handler.extract import extract_lambda_hander
+from src.lambda_handler.extract import list_files
 import pytest
 import boto3
 import os
-from moto import mock_aws 
+from moto import mock_aws
 
 
 
@@ -33,6 +33,27 @@ class TestBaseDataBucket():
         s3.create_bucket(Bucket="TestDataBucket") # s3 from fixture
         result = s3.list_buckets()
         assert len(result["Buckets"]) == 1
+
+
+class TestHelperFunctions(): 
+    def test_list_files_returns_files_in_bukcet(self, s3, aws_credentials): 
+        #create fake bucket 
+        s3.create_bucket(Bucket="TestDataBucket") # s3 from fixture
+        os.environ["FILES_BUCKET"] = "TestDataBucket"   # env variable needs same name as func, so the main function can still run (otherwise will return None) 
+
+        #put files in fake bucket (x2)
+        s3.put_object(Body="files_content_1", Bucket="TestDataBucket", Key='file_1.csv')
+        s3.put_object(Body="files_content_2", Bucket="TestDataBucket", Key='file_2.csv')
+
+        files = list_files()
+
+        assert len(files) == 2
+        assert files == ["file_1.csv", "file_2.csv"]
+
+    #test for no files found 
+
+
+
 
 
 #TODO: Test lambda handler 
