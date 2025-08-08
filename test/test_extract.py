@@ -1,4 +1,4 @@
-from src.lambda_handler.extract import list_files
+from src.lambda_handler.extract import list_raw_files, list_extracted_files
 import pytest
 import boto3
 import os
@@ -33,9 +33,13 @@ class TestBaseDataBucket():
         s3.create_bucket(Bucket="TestDataBucket") # s3 from fixture
         result = s3.list_buckets()
         assert len(result["Buckets"]) == 1
+        #TODO: check worthwhile test
 
+#is the raw data bucket availble 
+#is the extract s3 bucket available
+#test for missing or incorrect env variables 
 
-class TestHelperFunctions(): 
+class TestListRawFiles(): 
     def test_list_files_returns_files_in_bukcet(self, s3, aws_credentials): 
         #create fake bucket 
         s3.create_bucket(Bucket="TestDataBucket") # s3 from fixture
@@ -45,37 +49,73 @@ class TestHelperFunctions():
         s3.put_object(Body="files_content_1", Bucket="TestDataBucket", Key='file_1.csv')
         s3.put_object(Body="files_content_2", Bucket="TestDataBucket", Key='file_2.csv')
 
-        files = list_files()
+        files = list_raw_files()
 
         assert len(files) == 2
         assert files == ["file_1.csv", "file_2.csv"]
 
     #test for no files found 
+    def test_list_files_returns_empty_list_if_no_files(self, s3, aws_credentials): 
+        #create fake bucket 
+        s3.create_bucket(Bucket="TestDataBucket") # s3 from fixture
+        os.environ["FILES_BUCKET"] = "TestDataBucket"   # env variable needs same name as func, so the main function can still run (otherwise will return None) 
+
+        files = list_raw_files()
+
+        assert len(files) == 0
+        assert files == []
+
+class TestListExtractedFiles(): 
+    def test_list_files_returns_files_in_bukcet(self, s3, aws_credentials): 
+        #create fake bucket 
+        s3.create_bucket(Bucket="TestExtractedBucket") 
+        os.environ["S3_INGESTION_BUCKET"] = "TestExtractedBucket"   
+
+        #put files in fake bucket (x2)
+        s3.put_object(Body="files_content_1", Bucket="TestExtractedBucket", Key='file_1.csv')
+        s3.put_object(Body="files_content_2", Bucket="TestExtractedBucket", Key='file_2.csv')
+
+        files = list_extracted_files()
+
+        assert len(files) == 2
+        assert files == ["file_1.csv", "file_2.csv"]
+
+    #test for no files found 
+    def test_list_files_returns_empty_list_if_no_files(self, s3, aws_credentials): 
+        #create fake bucket 
+        s3.create_bucket(Bucket="TestExtractedBucket") 
+        os.environ["S3_INGESTION_BUCKET"] = "TestExtractedBucket"   
+
+        files = list_extracted_files()
+
+        assert len(files) == 0
+        assert files == []
+
+class TestCheckNewFiles(): 
+    def test_check_for_new_files_returns_list_of_new_files(): 
+        pass
+    def test_check_for_new_files_returns_msg_if_no_new_files(): 
+        pass
+
+class TestCheckNewPermittedFiles(): 
+    def test(): 
+        pass 
+
+class TestExtractRawFiles(): 
+    def test(): 
+        pass
+
+class TestConvertToDf(): 
+    def test(): 
+        pass
+
+class TestUploadToIngestionBucket(): 
+    def test(): 
+        pass
+
+class TestLambdaHandler(): 
+    def test(): 
+        pass
 
 
-
-
-
-#TODO: Test lambda handler 
-# class TestLambdaHandler(): 
-#     def test_lambda_handler(): 
-#         assert extract_lambda_hander() == 1
-
-
-
-#is the bucket availble 
-#is the destination available - extract s3 
-#test for missing or incorrect env variables 
-
-#can it access s3 with correct IAM permission? 
-#what if the file does not exist? 
-#is the key(filename) correct? 
-#test for existing and non-existing keys 
-
-#valid csv?
-#empty file? 
-#file with unexpected columns 
-
-#does pd.read_csv(obj['Body']) work? 
-#if returns a non-dataframe or errors? 
 
