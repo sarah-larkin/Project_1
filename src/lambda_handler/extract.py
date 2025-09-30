@@ -70,16 +70,18 @@ def extract_raw_files():
     """
     args: bucket, key, local_path
     extract from s3 (to /tmp in Lambda) 
+    returns: panda df 
+
     """
     pass
 
-def convert_raw_to_df(): 
-    """
-    convert to pandas df eg. pd.read_csv()
-    error handling - read failure, empty file...
-    return: list of dfs? 
-    """
-    pass
+# def convert_raw_to_df(): 
+#     """
+#     convert to pandas df eg. pd.read_csv()
+#     error handling - read failure, empty file...
+#     return: list of dfs? 
+#     """
+#     pass
 
 def upload_to_ingestion_bucket():
     """
